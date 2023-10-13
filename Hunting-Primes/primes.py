@@ -39,8 +39,12 @@ def I(i:int) -> int:
 
 Ix = numpy.vectorize(I)
 
-def multiple(Up2:int, p:int) -> numpy.ndarray:
-	return Ix(p * numpy.arange(p, Up2//p + 1, 2, dtype=int))
+def multiple(Up2:int) -> typing.Callable:
+	Indexer = numpy.arange(3, Up2+2, 2)
+
+	def M(p:int) -> numpy.ndarray:
+		return Ix(p * Indexer[(p - 3)//2:(Up2//p - 1)//2])
+	return M
 
 @timeit
 def sieve(Up2:int) -> numpy.ndarray:
@@ -48,7 +52,7 @@ def sieve(Up2:int) -> numpy.ndarray:
 	if Up2 < 2:
 		return numpy.asarray([])
 
-	M = functools.partial(multiple, Up2)
+	M = multiple(Up2)
 
 	N = numpy.arange(1, Up2+1, 2, dtype=int)
 	N[0] = 2
