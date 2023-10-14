@@ -52,10 +52,8 @@ int *sieve(const int Up2){
 	while(S--)
 		if (*++s)	*t++ = *s;
 
-	S = t - Re;
-	*Re = S - 1;
-
-	return realloc(Re, S * sizeof(int));
+	*Re = t - N;
+	return realloc(Re, (t - Re) * sizeof(int));
 }
 
 int main(int argc, char* argv[]){
