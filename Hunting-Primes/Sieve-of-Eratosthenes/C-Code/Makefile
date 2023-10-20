@@ -1,16 +1,23 @@
+CC=clang
+CFlags=-c -Wall -O2
+EXE=emainEXE
+SHELL:=/usr/bin/bash
+SRCS=$(wildcard *.c)
+OBJS=$(SRCS:.c=.o)
+
 all: run clean
 
-main: *.o
-	gcc -o emainEXE *.o
+main: $(OBJS)
+	@ $(CC) -o $(EXE) *.o
 
 %.o: %.c
-	gcc -c $<
+	@ $(CC) $(CFlags) $< -o $@
 
 run: main
-	@echo - - - - - - - - -
-	./emainEXE
-	@echo - - - - - - - - -
+	@ echo - - - - - - - - - - -
+	@ time ./$(EXE)
+	@ echo - - - - - - - - - - -
 
 clean:
-	rm -f *.o emainEXE
+	@ rm -f *.o $(EXE)
 

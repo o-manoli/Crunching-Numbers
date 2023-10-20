@@ -1,74 +1,78 @@
 #include "stdio.h"
 #include "stdlib.h"
 
-void print(int *t){
+#define Number unsigned int
+
+void print(Number* t) {
 	int s = *t++;
-	while(s--)
+	while (s--)
 		printf("%d\n", *t++);
 }
 
-int *sieve(const int Up2){
+Number* sieve(const Number Up2) {
 
 	if (Up2 < 2)
-		return calloc(0, sizeof(int));
+		return (Number*) calloc(0, sizeof(Number));
 
-	const int SIZE = (Up2+1)/2;
-	int* const Re = malloc( (SIZE+1) * sizeof(int));
+	const Number SIZE = (Up2 + 1) / 2;
+	Number* const Re = (Number*) malloc((SIZE + 1) * sizeof(Number));
+	Number* const BOUND = Re + SIZE;
+
+	if (!Re)		exit(1);		// Memory DENIED!
+
 	*Re = SIZE;
 
-
 	// tmp
-	int S;		int *t, *s;
+	Number* t, * s;		Number p, pp;
 
 	// Aliases
-	int* const N = Re +1;	// #cell-shift => start at 2
+	Number* const N = Re + 1;	// #cell-shift => start at 2
 
 	// 1. Populate
-	t = N;
-	*t++ = 2;	s = t;	*t++ = 3;
+	t = N;			*t++ = 2;
 
-	S = SIZE-2;	// start loop at cell 5
-	while(S--)
+	if (Up2 < 3)	return Re;
+
+	s = t;	*t++ = 3;	p = SIZE - 2;
+
+	while (p--)
 		*t++ = 2 + *s++;
 
-	// 2. Eliminate
+	t = N + 1;
+	do {	// 2. Eliminate
 
-	int p = 3;	int p2;
-	t = N+1;
+		p = *t;			pp = p * p;
 
-	while(p*p <= Up2){
-
-		p2 = p<<1;		// cache 2*p
-
-		for (int i = p*p; i <= Up2 ; i += p2)
-			N[i>>1] = 0;
+		for (s = N + (pp >> 1); s <= BOUND; s += p) *s = 0;
 
 		while (!*++t);
-		p = *t;
-	}
 
-	S = SIZE;	t = N;	s = t-1;
+	} while (pp <= Up2);
 
-	while(S--)
+	t = N;	s = t - 1;	p = BOUND - Re;
+
+	while (p--)	// 3. Collect
 		if (*++s)	*t++ = *s;
 
 	*Re = t - N;
-	return realloc(Re, (t - Re) * sizeof(int));
+
+	return (Number*) realloc(Re, (t - Re) * sizeof(Number));
 }
 
-int main(int argc, char* argv[]){
+int main(int argc, char* argv[]) {
 
-	int Up2 = (argc < 2) ? 7919 : atoi(argv[1]);	// the 1000th prime
+	int Up2 = (argc < 2) ? 7919	 : atoi(argv[1]);	// the 1000th prime
 
-	int* const primes = sieve(Up2);
+	Number* const Primes = sieve(Up2);
 
-	if (argc > 2){
+	if (argc > 2) {
 		if (argv[2][0] == 'w')
-			print(primes);
-	} else
-		printf("\n\n\t%d Primes found Up to %d\n\n", *primes, Up2);
+			print(Primes);
+	}
+	else
+		printf("\n\n\t%d Primes found Up to %d\n\n", *Primes, Up2);
 
-	free(primes);
+	free(Primes);
 
 	return 0;
 }
