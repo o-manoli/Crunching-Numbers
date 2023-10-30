@@ -45,7 +45,7 @@ def cycle(A: Iterable[Any], *B: Sequence[Any]):
 		S.append(S[-1] * len(X))
 		return loopCycle(X, S[-2])
 	O = *map(M, B), repeatCycle(A, InternalState[-1])
-	return zip(*O[::-1])
+	return tuple(zip(*O[::-1]))
 
 if __name__ == '__main__':
 	print(__doc__)
