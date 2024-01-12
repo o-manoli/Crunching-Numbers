@@ -1,15 +1,16 @@
 CC=g++
 CFlags=-c -Wall -O2
 EXE=appEXE
-OBJs=main
+SRCs=main.cpp
+OBJs=$(SRCs:.cpp=.o)
 
 all: run
 
 link: $(OBJs)
 	$(CC) -o $(EXE) *.o
 
-%:%.cpp
-	$(CC) $(CFlags) $< -o $@.o
+%.o:%.cpp
+	$(CC) $(CFlags) $< -o $@
 
 run: link
 	@ echo - - - - - - - - - - - - - -

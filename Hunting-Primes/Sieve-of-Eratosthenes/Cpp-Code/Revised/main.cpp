@@ -21,7 +21,7 @@ std::vector<T> sieve(T Up2)
       do {p += 2;} while(*++index);
    }
 
-   std::vector<T> Primes;   Primes.reserve(1 + (N.capacity()>>1));   p = 1;
+   std::vector<T> Primes;  Primes.reserve(1 + (N.capacity()>>1));  p = 1;
 
    for (const auto &n : N){
       if (!n) Primes.push_back(p);
@@ -47,11 +47,10 @@ int main(int argc, char* argv[])
    if (argc > 1)
       Up2 = std::stoi(argv[1]);
 
-   std::vector<int> Primes = sieve(Up2);  // could be longer
+   auto Primes = sieve(Up2);	// could be longer
 
    print(Primes);
 
    return 0;
 }
-
 
