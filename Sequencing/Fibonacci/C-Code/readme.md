@@ -70,12 +70,6 @@ A function with an internal state is basically an object!
 	Sure looks cool.
 	Not much useful really
 */
-/*
-	Author: @O-Manoli
-
-	Sure looks cool.
-	Not much useful really
-*/
 
 #include <stdio.h>
 #include <stdlib.h>
