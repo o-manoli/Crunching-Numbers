@@ -1,23 +1,25 @@
-CC=clang
-CFlags=-c -Wall -O2
-EXE=emainEXE
-SHELL:=/usr/bin/bash
-SRCS=$(wildcard *.c)
-OBJS=$(SRCS:.c=.o)
 
-all: run clean
+CC=gcc
+CFlags=-c -Wall -g
+EXE=PrimesEXE
 
-main: $(OBJS)
-	@ $(CC) -o $(EXE) *.o
+SRCs=$(wildcard *.c)
+OBJs=$(addprefix obj., $(SRCs:%.c=%.o))
 
-%.o: %.c
-	@ $(CC) $(CFlags) $< -o $@
+all: $(EXE)
 
-run: main
-	@ echo - - - - - - - - - - -
-	@ time ./$(EXE)
-	@ echo - - - - - - - - - - -
+obj.%.o: %.c
+	$(CC) $(CFlags) $< -o $@
+
+$(EXE): $(OBJs)
+	$(CC) -o $(EXE) $(OBJs)
+
+run: $(EXE)
+	@ echo - - - - - - - - - - - - - - - - -
+	./$(EXE) $(args)
+	@ echo - - - - - - - - - - - - - - - - -
 
 clean:
-	@ rm -f *.o $(EXE)
+	rm -f $(EXE) $(OBJs)
+
 
