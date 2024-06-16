@@ -8,13 +8,15 @@ int* sieve(int Up2)
 {
 	/*
 		Returns a heap allocated array of prime numbers
+		With the capacity as the first value in that array
 	*/
 
 	if (Up2 < 2) return (int*) calloc(1, sizeof(int));
 
 	const int Size = (++Up2) >> 1;
 
-	bool* const N = (bool*) calloc(Size, sizeof(bool));  // All numbers are assumed primes unless proven otherwise
+	bool* const N = (bool*) calloc(Size, sizeof(bool));
+	// All numbers are assumed primes unless proven otherwise
 
 	if (!N)   exit(1);
 
@@ -26,7 +28,7 @@ int* sieve(int Up2)
 
 	while ((F = N + ((p * p) >> 1)) < Bound)
 	{
-		for (bool* n = F; n < Bound; n += p)   *n = 1;		// is not primes
+		for (bool* n = F; n < Bound; n += p)   *n = 1;   // is not primes
 
 		while ((p += 2) && *++i);
 	}

@@ -1,25 +1,21 @@
 
-CC=gcc
-CFlags=-c -Wall -g
-EXE=PrimesEXE
+CC = gcc
 
-SRCs=$(wildcard *.c)
-OBJs=$(addprefix obj., $(SRCs:%.c=%.o))
+CFLAGS = -Wall
 
-all: $(EXE)
+SRCs = main.c primes.c
+OBJs = $(SRCs:%.c=%.o)
+DEPs = primes.h
 
-obj.%.o: %.c
-	$(CC) $(CFlags) $< -o $@
+defallt: primes.run
 
-$(EXE): $(OBJs)
-	$(CC) -o $(EXE) $(OBJs)
+%.o: %.c $(DEPs)
+	$(CC) $(CFLAGS) -c $< -o $@
 
-run: $(EXE)
-	@ echo - - - - - - - - - - - - - - - - -
-	./$(EXE) $(args)
-	@ echo - - - - - - - - - - - - - - - - -
+%.exe: $(OBJs)
+	$(CC) $^ -o $@
 
-clean:
-	rm -f $(EXE) $(OBJs)
-
-
+%.run: %.exe
+	@ echo - - - - - - - - - - - - - - - -
+	./$< $(args)
+	@ echo - - - - - - - - - - - - - - - -
