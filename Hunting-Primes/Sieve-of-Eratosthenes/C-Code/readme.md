@@ -1,6 +1,6 @@
 # Implementation of Sieve Of Eratosthenes in C
 
-Ran on Linux and Windows
+Build for linux/unix like os
 
 ## Disclaimer
 
@@ -12,9 +12,7 @@ Makefile looks cool though!
 
 ### .run
 
-Any Option with `.run` at the end will auto clean everything after execution!
-
-Look into [GNU Make: Chain-Rules and intermediate files](https://www.gnu.org/software/make/manual/html_node/Chained-Rules.html)
+For More info look into [GNU Make: Chain-Rules and intermediate files](https://www.gnu.org/software/make/manual/html_node/Chained-Rules.html)
 
 #### Demo
 
@@ -41,7 +39,7 @@ If you can the executable around for multiple runs.
 Anything with `.exe` at the end should works.
 
 ```bash
-make primes.exe
+make bin/main.exe
 ```
 
 ## Help
